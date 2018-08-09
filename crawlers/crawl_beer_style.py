@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 from lxml import html
 import re
 import pandas as pd
+import pymysql
+
+from mysql.config import MYSQL
 
 
 def get_style_list():
@@ -20,6 +23,16 @@ def set_table(table_type):
         df = pd.DataFrame(columns=['Style_name', 'Description'])
         df.loc[0] = ['style_name', 'description']
     return df
+
+
+def db_connect(host, user, passwd, db, charset='UTF8'):
+    connection = pymysql.connect(host=host,
+                                 user=user,
+                                 passwd=passwd,
+                                 db=db,
+                                 charset=charset,
+                                 )
+    return connection
 
 
 def get_style_info(link_list):
